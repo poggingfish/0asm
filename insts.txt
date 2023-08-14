@@ -1,0 +1,23 @@
+i = Instruction with no arg
+ia = Instructon with arg
+
+ia0 - Load next integer to stack
+i1 - Pops and prints top stack item
+i2 - Pops and prints the top stack item as a char. (MUST BE INT)
+ia3 - Create a label
+ia4 - Jump to a label
+ia5 - Puts top of stack into a "memory" location
+ia6 - Puts a "memory" location onto the top of the stack
+i7 - Swaps top two stack items
+i8 - Puts 1 on the stack if the top two stack items are equal, 0 if not
+ia9 - Jump if the top item is 1
+ia10 - Jump if the top item is 0
+i11 - Duplicate top stack item
+i12 - Checks if the top stack item is greater than the top-1 stack item, 1 if true, 0 if not. (You can mix this with i8 to get a greater or eq, or less than or equal operator.)
+
+Math operations start with an "m"
+
+m+ - Adds top two stack items
+m- - Subtracts top two stack items
+m* - Multiplys top two stack items
+m/ - Divides top two stack items
