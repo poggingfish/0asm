@@ -1,6 +1,7 @@
 CC=g++
 v=v
 CFLAGS= -c -Wall -O2
+VFLAGS= -prod
 build: mkdir build/oasm.o build/execute.o build/parser.o bin/1asm.out
 	$(CC) build/oasm.o build/execute.o build/parser.o -o bin/0asm.out
 build/oasm.o: src/oasm.cc
@@ -16,4 +17,4 @@ mkdir:
 	mkdir -p build
 	mkdir -p bin
 bin/1asm.out: 1asm/src/*
-	$(v) 1asm/src -o bin/1asm.out
+	$(v) $(VFLAGS) 1asm/src -o bin/1asm.out
