@@ -14,7 +14,8 @@ ia9 - Jump if the top item is 1
 ia10 - Jump if the top item is 0
 i11 - Duplicate top stack item
 i12 - Checks if the top stack item is greater than the top-1 stack item, 1 if true, 0 if not. (You can mix this with i8 to get a greater or eq, or less than or equal operator.)
-
+i13 - Push current location to call stack, takes an offset from the top of the stack
+i14 - Jump to top of call stack, if empty jump to 0
 Math operations start with an "m"
 
 m+ - Adds top two stack items
