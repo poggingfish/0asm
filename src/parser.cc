@@ -182,25 +182,25 @@ std::vector<Instruction> parse(std::string contents)
             {
             case '+':
             {
-                Instruction *instruction = new Instruction(Plus);
+                Instruction *instruction = new Instruction(17);
                 bytecode.push_back(*instruction);
                 break;
             }
             case '-':
             {
-                Instruction *instruction = new Instruction(Minus);
+                Instruction *instruction = new Instruction(18);
                 bytecode.push_back(*instruction);
                 break;
             }
             case '*':
             {
-                Instruction *instruction = new Instruction(Multiply);
+                Instruction *instruction = new Instruction(19);
                 bytecode.push_back(*instruction);
                 break;
             }
             case '/':
             {
-                Instruction *instruction = new Instruction(Divide);
+                Instruction *instruction = new Instruction(20);
                 bytecode.push_back(*instruction);
                 break;
             }

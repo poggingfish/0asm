@@ -16,6 +16,14 @@ pub enum NodeType {
 	equal
 	proc
 	call
+	dup
+	swap
+	alloc
+	free
+	get
+	set
+	ifstmt
+	notifstmt
 }
 
 pub struct Type {

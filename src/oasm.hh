@@ -9,20 +9,12 @@ enum ArgType
     None,
     Math
 };
-enum MathType
-{
-    Plus,
-    Minus,
-    Divide,
-    Multiply
-};
 
 class Instruction
 {
 public:
     int inst;
     ArgType selected;
-    MathType mathOp;
     std::optional<std::string> string_arg;
     std::optional<int> int_arg;
     Instruction(int inst, std::string arg)
@@ -36,11 +28,6 @@ public:
         this->inst = inst;
         this->int_arg = arg;
         this->selected = Int;
-    }
-    Instruction(MathType arg)
-    {
-        this->mathOp = mathOp;
-        this->selected = Math;
     }
     Instruction(int inst)
     {

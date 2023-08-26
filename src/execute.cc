@@ -211,6 +211,12 @@ void execute(std::vector<Instruction> bytecode)
     std::stack<int> call_stack;
     std::unordered_map<int, int> labels = {};
     std::unordered_map<int, Type> mem = {};
+    std::unordered_map<std::string, int> strmem = {};
+    std::deque<int> unallocated;
+    for (int ptr = 0; ptr < 1000; ptr++)
+    {
+        unallocated.push_front(ptr);
+    }
     for (int i = 0; i < (int)bytecode.size(); i++)
     {
         switch (bytecode[i].inst)
@@ -229,28 +235,6 @@ void execute(std::vector<Instruction> bytecode)
     }
     for (int i = 0; i < (int)bytecode.size(); i++)
     {
-        if (bytecode[i].selected == Math)
-        {
-            switch (bytecode[i].mathOp)
-            {
-            case Plus:
-                stack.plus();
-                break;
-            case Minus:
-                stack.minus();
-                break;
-            case Multiply:
-                stack.multiply();
-                break;
-            case Divide:
-                stack.divide();
-                break;
-            default:
-                std::cout << "[RUNTIME ERROR] Something is not implemented in execute.cc" << std::endl;
-                exit(1);
-            }
-            continue;
-        }
         switch (bytecode[i].inst)
         {
         case 0:
@@ -280,22 +264,36 @@ void execute(std::vector<Instruction> bytecode)
             break;
         case 5:
         {
-            if (bytecode[i].selected != Int)
+            if (bytecode[i].selected != Int && bytecode[i].selected != String)
             {
-                std::cout << "[RUNTIME ERROR] Inst 5 expects a int." << std::endl;
+                std::cout << "[RUNTIME ERROR] Inst 5 expects a int or string." << std::endl;
                 exit(1);
             }
             Type m = stack.pop();
-            mem[bytecode[i].int_arg.value()] = m;
+            if (bytecode[i].selected == Int)
+            {
+                mem[bytecode[i].int_arg.value()] = m;
+            }
+            else
+            {
+                mem[strmem[bytecode[i].string_arg.value()]] = m;
+            }
             break;
         }
         case 6:
-            if (bytecode[i].selected != Int)
+            if (bytecode[i].selected != Int && bytecode[i].selected != String)
             {
-                std::cout << "[RUNTIME ERROR] Inst 6 expects a int." << std::endl;
+                std::cout << "[RUNTIME ERROR] Inst 6 expects a int or string." << std::endl;
                 exit(1);
             }
-            stack.stack.push(mem[bytecode[i].int_arg.value()]);
+            if (bytecode[i].selected == Int)
+            {
+                stack.stack.push(mem[bytecode[i].int_arg.value()]);
+            }
+            else
+            {
+                stack.stack.push(mem[strmem[bytecode[i].string_arg.value()]]);
+            }
             break;
         case 7:
         {
@@ -351,6 +349,7 @@ void execute(std::vector<Instruction> bytecode)
         case 11:
         {
             stack.stack.push(stack.stack.top());
+            break;
         }
         case 12:
         {
@@ -386,6 +385,46 @@ void execute(std::vector<Instruction> bytecode)
                 i = call_stack.top();
                 call_stack.pop();
             }
+            break;
+        case 15:
+        {
+            if (bytecode[i].selected != String)
+            {
+                printf("[RUNTIME ERROR] Expected a string name for inst 15!\n");
+                exit(1);
+            }
+            if (unallocated.empty())
+            {
+                printf("[RUNTIME ERROR] Out of memory!\n");
+                exit(1);
+            }
+            std::string name = bytecode[i].string_arg.value();
+            int loc = unallocated.back();
+            unallocated.pop_back();
+            strmem[name] = loc;
+            break;
+        }
+        case 16:
+            if (bytecode[i].selected != String)
+            {
+                printf("[RUNTIME ERROR] Expected a string name for inst 15!\n");
+                exit(1);
+            }
+            unallocated.push_back(strmem[bytecode[i].string_arg.value()]);
+            strmem.erase(bytecode[i].string_arg.value());
+            break;
+        case 17:
+            stack.plus();
+            break;
+        case 18:
+            stack.minus();
+            break;
+        case 19:
+            stack.multiply();
+            break;
+        case 20:
+            stack.divide();
+            break;
         }
     }
 }

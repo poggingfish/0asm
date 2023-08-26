@@ -63,5 +63,10 @@
         "variant": "cpp",
         "hash_map": "cpp",
         "set": "cpp"
-    }
+    },
+    "editor.formatOnSave": true,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "python.formatting.provider": "none",
 }

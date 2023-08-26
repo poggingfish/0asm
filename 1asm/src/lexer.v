@@ -9,7 +9,19 @@ pub fn lex(contents string) []Node {
 		'.': NodeType.print
 		'{': NodeType.open_curly
 		'}': NodeType.close_curly
-		'=': NodeType.equal
+	}
+	mut string_toks := {
+		'dup':   NodeType.dup
+		'proc':  NodeType.proc
+		'call':  NodeType.call
+		'swap':  NodeType.swap
+		'free':  NodeType.free
+		'set':   NodeType.set
+		'get':   NodeType.get
+		'alloc': NodeType.alloc
+		'if':    NodeType.ifstmt
+		'!if':   NodeType.notifstmt
+		'==':    NodeType.equal
 	}
 	mut linenum := 0
 	mut charnum := 0
@@ -83,23 +95,21 @@ pub fn lex(contents string) []Node {
 					chr: charnum
 					ln: linenum
 				}
-			} else if ident == 'proc' {
-				nodes << Node{
-					nodetype: NodeType.proc
-				}
-			} else if ident == 'call' {
-				nodes << Node{
-					nodetype: NodeType.call
-				}
 			} else {
-				nodes << Node{
-					nodetype: NodeType.ident
-					arg: Type{
-						sel: TypeSel.s
-						str_type: ident
+				if string_toks.keys().contains(ident) {
+					nodes << Node{
+						nodetype: string_toks[ident]
 					}
-					chr: charnum
-					ln: linenum
+				} else {
+					nodes << Node{
+						nodetype: NodeType.ident
+						arg: Type{
+							sel: TypeSel.s
+							str_type: ident
+						}
+						chr: charnum
+						ln: linenum
+					}
 				}
 			}
 			if i < contents.len && contents[i].ascii_str() == '\n' {

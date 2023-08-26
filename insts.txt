@@ -16,9 +16,11 @@ i11 - Duplicate top stack item
 i12 - Checks if the top stack item is greater than the top-1 stack item, 1 if true, 0 if not. (You can mix this with i8 to get a greater or eq, or less than or equal operator.)
 i13 - Push current location to call stack, takes an offset from the top of the stack
 i14 - Jump to top of call stack, if empty jump to 0
+ia15 - Allocate memory to a string name (similar to a variable.)
+ia16 - Deallocate memory initialized with ia15
 Math operations start with an "m"
 
-m+ - Adds top two stack items
-m- - Subtracts top two stack items
-m* - Multiplys top two stack items
-m/ - Divides top two stack items
+i17 / m+ - Plus
+i18 / m- - Minus
+i19 / m* - Mulitply
+120 / m/ - Divide

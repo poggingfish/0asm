@@ -1,8 +1,0 @@
-proc Main {
-    "main says hi!\n" .
-    call pog2
-    "After pog2 says hi!\n" .
-}
-proc pog2 {
-    "pog2 says hi!\n" .
-}

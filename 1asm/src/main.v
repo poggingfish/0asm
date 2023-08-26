@@ -13,8 +13,11 @@ fn main() {
 	lexed := lex(file_content)
 	nodes := parse(lexed)
 	mut proc_ptr := 1 // Reserve 1 proc for end
-	mut procs := map[string]int{}
-	compile(nodes, mut file, mut &proc_ptr, mut procs)
+	mut procs := {
+		'end': 0
+	}
+
+	compile(nodes, mut file, mut &proc_ptr, mut procs, true)
 	file.write_string('\nia3 0\n') or { panic(err) }
 	file.close()
 }
