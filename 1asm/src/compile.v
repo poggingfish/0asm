@@ -71,6 +71,16 @@ fn compile(nodes []Node, mut file os.File, mut proc_ptr &int, mut procs map[stri
 			file.write_string('ia3 ${int(continue_proc)} ;; !If statement ends here\n') or {
 				panic(err)
 			}
+		} else if i.nodetype == NodeType.getc {
+			file.write_string('i21 ') or { panic(err) }
+		} else if i.nodetype == NodeType.flush {
+			file.write_string('i22 ') or { panic(err) }
+		} else if i.nodetype == NodeType.fdopen {
+			file.write_string('i23 ') or { panic(err) }
+		} else if i.nodetype == NodeType.fputc {
+			file.write_string('i24 ') or { panic(err) }
+		} else if i.nodetype == NodeType.fputs {
+			file.write_string('i25 ') or { panic(err) }
 		}
 	}
 }

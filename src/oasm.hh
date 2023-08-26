@@ -7,6 +7,7 @@ enum ArgType
     String,
     Int,
     None,
+    AnyType,
     Math
 };
 

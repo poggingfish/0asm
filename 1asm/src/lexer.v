@@ -11,17 +11,22 @@ pub fn lex(contents string) []Node {
 		'}': NodeType.close_curly
 	}
 	mut string_toks := {
-		'dup':   NodeType.dup
-		'proc':  NodeType.proc
-		'call':  NodeType.call
-		'swap':  NodeType.swap
-		'free':  NodeType.free
-		'set':   NodeType.set
-		'get':   NodeType.get
-		'alloc': NodeType.alloc
-		'if':    NodeType.ifstmt
-		'!if':   NodeType.notifstmt
-		'==':    NodeType.equal
+		'dup':    NodeType.dup
+		'proc':   NodeType.proc
+		'call':   NodeType.call
+		'swap':   NodeType.swap
+		'free':   NodeType.free
+		'set':    NodeType.set
+		'get':    NodeType.get
+		'alloc':  NodeType.alloc
+		'if':     NodeType.ifstmt
+		'!if':    NodeType.notifstmt
+		'==':     NodeType.equal
+		'getc':   NodeType.getc
+		'flush':  NodeType.flush
+		'openfd': NodeType.fdopen
+		'fputc':  NodeType.fputc
+		'fputs':  NodeType.fputs
 	}
 	mut linenum := 0
 	mut charnum := 0

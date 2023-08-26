@@ -24,6 +24,11 @@ pub enum NodeType {
 	set
 	ifstmt
 	notifstmt
+	getc
+	flush
+	fdopen
+	fputc
+	fputs
 }
 
 pub struct Type {

@@ -19,8 +19,12 @@ i14 - Jump to top of call stack, if empty jump to 0
 ia15 - Allocate memory to a string name (similar to a variable.)
 ia16 - Deallocate memory initialized with ia15
 Math operations start with an "m"
-
 i17 / m+ - Plus
 i18 / m- - Minus
 i19 / m* - Mulitply
 120 / m/ - Divide
+i21 - Take one character from stdin
+i22 - Flushes file
+i23 - Opens file from fd
+i24 - Puts a single character in a file
+i24 - Puts a string in a file

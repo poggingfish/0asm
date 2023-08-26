@@ -2,7 +2,7 @@ CC=g++
 v=v
 CFLAGS= -c -Wall -O2
 build: mkdir build/oasm.o build/execute.o build/parser.o bin/1asm.out
-	$(CC) build/oasm.o build/execute.o build/parser.o -o bin/0asm.out
+	$(CC) -lncurses build/oasm.o build/execute.o build/parser.o -o bin/0asm.out
 build/oasm.o: src/oasm.cc
 	$(CC) $(CFLAGS) src/oasm.cc -o build/oasm.o
 build/execute.o: src/execute.cc
