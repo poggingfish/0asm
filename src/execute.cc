@@ -536,7 +536,7 @@ void execute(std::vector<Instruction> bytecode)
             Type file = stack.pop();
             if (file.sel != AnyType)
             {
-                std::cout << "i25 expected AnyType for file." << std::endl;
+                std::cout << "i26 expected AnyType for file." << std::endl;
                 exit(1);
             }
             fclose((FILE *)file.anytype.value());
