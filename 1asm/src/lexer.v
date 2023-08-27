@@ -31,6 +31,8 @@ pub fn lex(contents string) []Node {
 		'fopen':  NodeType.fopen
 		'null?':  NodeType.isnull
 		'exit':   NodeType.exit
+		'>2':     NodeType.stacktwopush
+		'<2':     NodeType.stacktwopop
 	}
 	mut linenum := 0
 	mut charnum := 0

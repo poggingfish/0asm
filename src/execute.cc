@@ -248,6 +248,7 @@ public:
 void execute(std::vector<Instruction> bytecode)
 {
     Stack stack;
+    Stack stack2;
     std::stack<int> call_stack;
     std::unordered_map<int, int> labels = {};
     std::unordered_map<int, Type> mem = {};
@@ -447,7 +448,7 @@ void execute(std::vector<Instruction> bytecode)
         case 16:
             if (bytecode[i].selected != String)
             {
-                printf("[RUNTIME ERROR] Expected a string name for inst 15!\n");
+                printf("[RUNTIME ERROR] Expected a string name for inst 16!\n");
                 exit(1);
             }
             unallocated.push_back(strmem[bytecode[i].string_arg.value()]);
@@ -582,6 +583,12 @@ void execute(std::vector<Instruction> bytecode)
             exit(type.inttype.value());
             break;
         }
+        case 30:
+            stack2.stack.push(stack.pop());
+            break;
+        case 31:
+            stack.stack.push(stack2.pop());
+            break;
         }
     }
 }

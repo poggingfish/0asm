@@ -32,3 +32,5 @@ i26 - closes a file
 i27 - Opens a file from a string
 i28 - Checks if the top value is a nullptr
 i29 - Exits program with an exit code
+i30 - Moves data from stack to stack2
+i31 - Moves data from stack2 to stack

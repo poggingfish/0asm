@@ -33,6 +33,8 @@ pub enum NodeType {
 	fopen
 	isnull
 	exit
+	stacktwopop
+	stacktwopush
 }
 
 pub struct Type {

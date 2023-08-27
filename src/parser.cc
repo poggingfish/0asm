@@ -76,7 +76,7 @@ std::vector<Instruction> parse(std::string contents)
                 std::cout << "Argument provided before instruction requiring argument." << std::endl;
                 exit(1);
             }
-            if (next_empty)
+            if (i + 1 >= (int)contents.length() || contents[i + 1] == '\n')
             {
                 std::cout << "Unexpected end of file on char token." << std::endl;
                 exit(1);
@@ -123,7 +123,7 @@ std::vector<Instruction> parse(std::string contents)
                 std::cout << "Argument provided before instruction requiring argument." << std::endl;
                 exit(1);
             }
-            if (next_empty)
+            if (i + 1 >= (int)contents.length() || contents[i + 1] == '\n')
             {
                 std::cout << "Unexpected end of file on string token." << std::endl;
                 exit(1);

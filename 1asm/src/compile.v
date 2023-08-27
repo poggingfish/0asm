@@ -89,6 +89,18 @@ fn compile(nodes []Node, mut file os.File, mut proc_ptr &int, mut procs map[stri
 			file.write_string('i28 ') or { panic(err) }
 		} else if i.nodetype == NodeType.exit {
 			file.write_string('i29 ') or { panic(err) }
+		} else if i.nodetype == NodeType.stacktwopush {
+			file.write_string('i30 ') or { panic(err) }
+		} else if i.nodetype == NodeType.stacktwopop {
+			file.write_string('i31 ') or { panic(err) }
+		} else if i.nodetype == NodeType.ident {
+			if procs.keys().contains(i.arg.str_type) {
+				file.write_string('ia0 0 i13 ia4 ${procs[i.arg.str_type]} ;; Call ${i.arg.str_type}\n') or {
+					panic(err)
+				}
+			} else {
+				err('Unexpected ident', i.ln, i.chr, true)
+			}
 		}
 	}
 }

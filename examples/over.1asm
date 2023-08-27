@@ -1,0 +1,9 @@
+proc over {
+    >2 dup <2 swap
+}
+proc s. {
+    . " " .
+}
+proc Main {
+    1 2 over s. s. s. 10 putc
+}
