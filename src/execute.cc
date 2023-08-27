@@ -8,24 +8,25 @@
 #include <unistd.h>
 #include <termios.h>
 
-char getch() {
-        char buf = 0;
-        struct termios old = {0};
-        if (tcgetattr(0, &old) < 0)
-                perror("tcsetattr()");
-        old.c_lflag &= ~ICANON;
-        old.c_lflag &= ~ECHO;
-        old.c_cc[VMIN] = 1;
-        old.c_cc[VTIME] = 0;
-        if (tcsetattr(0, TCSANOW, &old) < 0)
-                perror("tcsetattr ICANON");
-        if (read(0, &buf, 1) < 0)
-                perror ("read()");
-        old.c_lflag |= ICANON;
-        old.c_lflag |= ECHO;
-        if (tcsetattr(0, TCSADRAIN, &old) < 0)
-                perror ("tcsetattr ~ICANON");
-        return (buf);
+char getch()
+{
+    char buf = 0;
+    struct termios old = {0};
+    if (tcgetattr(0, &old) < 0)
+        perror("tcsetattr()");
+    old.c_lflag &= ~ICANON;
+    old.c_lflag &= ~ECHO;
+    old.c_cc[VMIN] = 1;
+    old.c_cc[VTIME] = 0;
+    if (tcsetattr(0, TCSANOW, &old) < 0)
+        perror("tcsetattr ICANON");
+    if (read(0, &buf, 1) < 0)
+        perror("read()");
+    old.c_lflag |= ICANON;
+    old.c_lflag |= ECHO;
+    if (tcsetattr(0, TCSADRAIN, &old) < 0)
+        perror("tcsetattr ~ICANON");
+    return (buf);
 }
 
 class Type
@@ -34,7 +35,7 @@ public:
     ArgType sel;
     std::optional<int> inttype;
     std::optional<std::string> strtype;
-    std::optional<void*> anytype;
+    std::optional<void *> anytype;
     Type(std::string val)
     {
         this->strtype = val;
@@ -45,7 +46,7 @@ public:
         this->inttype = val;
         this->sel = Int;
     }
-    Type(void* val)
+    Type(void *val)
     {
         this->anytype = val;
         this->sel = AnyType;
@@ -214,6 +215,9 @@ public:
             break;
         case Math:
             return true;
+            break;
+        case AnyType:
+            return val1.anytype.value() == val2.anytype.value();
             break;
         }
         return false;
@@ -467,57 +471,117 @@ void execute(std::vector<Instruction> bytecode)
         case 22:
         {
             Type file = stack.pop();
-            if (file.sel != AnyType) {
+            if (file.sel != AnyType)
+            {
                 std::cout << "i22 expected AnyType for fd." << std::endl;
                 exit(1);
             }
-            fflush((FILE*)file.anytype.value());
+            fflush((FILE *)file.anytype.value());
             break;
         }
         case 23:
         {
             Type type = stack.pop();
             Type mode = stack.pop();
-            if (type.sel != Int){
+            if (type.sel != Int)
+            {
                 std::cout << "i23 expects an int." << std::endl;
                 exit(1);
             }
-            if (mode.sel != String){
+            if (mode.sel != String)
+            {
                 std::cout << "i23 expects a string." << std::endl;
                 exit(1);
             }
             FILE *fd = fdopen(type.inttype.value(), mode.strtype.value().c_str());
-            stack.stack.push(Type((void*)fd));
+            stack.stack.push(Type((void *)fd));
             break;
         }
         case 24:
         {
             Type character = stack.pop();
             Type file = stack.pop();
-            if (file.sel != AnyType) {
+            if (file.sel != AnyType)
+            {
                 std::cout << "i24 expected AnyType for file." << std::endl;
                 exit(1);
             }
-            if (character.sel != Int) {
+            if (character.sel != Int)
+            {
                 std::cout << "i24 expected int for char." << std::endl;
                 exit(1);
             }
-            fputc(character.inttype.value(),(FILE*)file.anytype.value());
+            fputc(character.inttype.value(), (FILE *)file.anytype.value());
             break;
         }
         case 25:
+        {
             Type str = stack.pop();
             Type file = stack.pop();
-            if (file.sel != AnyType) {
+            if (file.sel != AnyType)
+            {
                 std::cout << "i25 expected AnyType for file." << std::endl;
                 exit(1);
             }
-            if (str.sel != String) {
+            if (str.sel != String)
+            {
                 std::cout << "i25 expected string." << std::endl;
                 exit(1);
             }
-            fputs(str.strtype.value().c_str(),(FILE*)file.anytype.value());
+            fputs(str.strtype.value().c_str(), (FILE *)file.anytype.value());
             break;
+        }
+        case 26:
+        {
+            Type file = stack.pop();
+            if (file.sel != AnyType)
+            {
+                std::cout << "i25 expected AnyType for file." << std::endl;
+                exit(1);
+            }
+            fclose((FILE *)file.anytype.value());
+            break;
+        }
+        case 27:
+        {
+            Type type = stack.pop();
+            Type mode = stack.pop();
+            if (type.sel != String)
+            {
+                std::cout << "i27 expects a string." << std::endl;
+                exit(1);
+            }
+            if (mode.sel != String)
+            {
+                std::cout << "i27 expects a string." << std::endl;
+                exit(1);
+            }
+            FILE *fd = fopen(type.strtype.value().c_str(), mode.strtype.value().c_str());
+            stack.stack.push(Type((void *)fd));
+            break;
+        }
+        case 28:
+        {
+            Type type = stack.pop();
+            if (type.sel != AnyType)
+            {
+                std::cout << "i28 expected AnyType." << std::endl;
+                exit(1);
+            }
+            stack.stack.push(Type((int)(type.anytype.value() == nullptr)));
+            break;
+        }
+        case 29:
+        {
+            Type type = stack.pop();
+            if (type.sel != Int)
+            {
+                std::cout << "i29 expected IntType." << std::endl;
+                exit(1);
+            }
+            exit(type.inttype.value());
+            break;
+        }
         }
     }
 }

@@ -81,6 +81,14 @@ fn compile(nodes []Node, mut file os.File, mut proc_ptr &int, mut procs map[stri
 			file.write_string('i24 ') or { panic(err) }
 		} else if i.nodetype == NodeType.fputs {
 			file.write_string('i25 ') or { panic(err) }
+		} else if i.nodetype == NodeType.fclose {
+			file.write_string('i26 ') or { panic(err) }
+		} else if i.nodetype == NodeType.fopen {
+			file.write_string('i27 ') or { panic(err) }
+		} else if i.nodetype == NodeType.isnull {
+			file.write_string('i28 ') or { panic(err) }
+		} else if i.nodetype == NodeType.exit {
+			file.write_string('i29 ') or { panic(err) }
 		}
 	}
 }

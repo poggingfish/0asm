@@ -27,4 +27,8 @@ i21 - Take one character from stdin
 i22 - Flushes file
 i23 - Opens file from fd
 i24 - Puts a single character in a file
-i24 - Puts a string in a file
+i25 - Puts a string in a file
+i26 - closes a file
+i27 - Opens a file from a string
+i28 - Checks if the top value is a nullptr
+i29 - Exits program with an exit code

@@ -1,0 +1,11 @@
+proc Main {
+    alloc file
+    "w" "hello.txt" fopen set file
+    get file null? 1 == if {
+        "Failed to open \"hello.txt\".\n" .
+        1 exit
+    }
+    get file "Hello, world!" fputs
+    get file fclose
+    free file
+}

@@ -27,6 +27,10 @@ pub fn lex(contents string) []Node {
 		'openfd': NodeType.fdopen
 		'fputc':  NodeType.fputc
 		'fputs':  NodeType.fputs
+		'fclose': NodeType.fclose
+		'fopen':  NodeType.fopen
+		'null?':  NodeType.isnull
+		'exit':   NodeType.exit
 	}
 	mut linenum := 0
 	mut charnum := 0

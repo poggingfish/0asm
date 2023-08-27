@@ -29,6 +29,10 @@ pub enum NodeType {
 	fdopen
 	fputc
 	fputs
+	fclose
+	fopen
+	isnull
+	exit
 }
 
 pub struct Type {
